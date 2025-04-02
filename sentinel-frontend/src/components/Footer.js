@@ -75,13 +75,13 @@ const Footer = () => {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <FaMapMarkerAlt color="#007FFF" />
                 <Typography variant="body2" sx={{ color: '#999' }}>
-                  123 Innovation Street, Tech City, TC 12345
+                  Coimbatore, Tamil Nadu, India
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <FaPhone color="#007FFF" />
                 <Typography variant="body2" sx={{ color: '#999' }}>
-                  +1 (555) 123-4567
+                  +91 000-00-00-000
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
