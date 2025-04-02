@@ -8,6 +8,7 @@ import Services from './components/Services';
 import AboutUs from './components/AboutUs';
 import UploadPage from './components/UploadPage';
 import PeopleDetection from './components/PeopleDetection';
+import NumberPlateDetection from './components/NumberPlateDetection';
 import Footer from './components/Footer';
 
 const theme = createTheme({
@@ -66,6 +67,7 @@ function App() {
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/upload" element={<UploadPage />} />
             <Route path="/people-detection" element={<PeopleDetection />} />
+            <Route path="/number-plate-detection" element={<NumberPlateDetection />} />
           </Routes>
           <Footer />
         </Box>

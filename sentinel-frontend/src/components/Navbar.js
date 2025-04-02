@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Typography, Button, Box, useScrollTrigger } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Box, useScrollTrigger, Menu, MenuItem } from '@mui/material';
 import { motion } from 'framer-motion';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { FaEye } from 'react-icons/fa';
+import { FaEye, FaCaretDown } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [analysisMenuAnchor, setAnalysisMenuAnchor] = useState(null);
   
   const trigger = useScrollTrigger({
     disableHysteresis: true,
@@ -36,6 +37,17 @@ const Navbar = () => {
       // Navigate to other pages
       navigate(path);
     }
+    
+    // Close menu if open
+    setAnalysisMenuAnchor(null);
+  };
+  
+  const handleAnalysisMenuOpen = (event) => {
+    setAnalysisMenuAnchor(event.currentTarget);
+  };
+  
+  const handleAnalysisMenuClose = () => {
+    setAnalysisMenuAnchor(null);
   };
 
   return (
@@ -113,6 +125,83 @@ const Navbar = () => {
               </Button>
             </motion.div>
           ))}
+          
+          {/* Analysis Dropdown Menu */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <Button
+              onClick={handleAnalysisMenuOpen}
+              sx={{
+                color: isScrolled ? '#1a1a1a' : '#fff',
+                position: 'relative',
+                '&:hover': {
+                  color: '#007FFF',
+                },
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  bottom: 0,
+                  left: '50%',
+                  width: ['/people-detection', '/number-plate-detection'].includes(location.pathname) ? '100%' : '0%',
+                  height: '2px',
+                  background: '#007FFF',
+                  transition: 'all 0.3s ease',
+                  transform: 'translateX(-50%)',
+                },
+                '&:hover::after': {
+                  width: '100%',
+                },
+              }}
+              endIcon={<FaCaretDown />}
+            >
+              Analysis
+            </Button>
+            <Menu
+              anchorEl={analysisMenuAnchor}
+              open={Boolean(analysisMenuAnchor)}
+              onClose={handleAnalysisMenuClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+              PaperProps={{
+                sx: {
+                  mt: 1,
+                  boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.1)',
+                  borderRadius: '8px',
+                  minWidth: '180px',
+                }
+              }}
+            >
+              <MenuItem 
+                onClick={() => handleNavigation('/people-detection')}
+                sx={{ 
+                  py: 1.5,
+                  color: location.pathname === '/people-detection' ? '#007FFF' : 'inherit',
+                  fontWeight: location.pathname === '/people-detection' ? 'bold' : 'normal',
+                }}
+              >
+                People Counting
+              </MenuItem>
+              <MenuItem 
+                onClick={() => handleNavigation('/number-plate-detection')}
+                sx={{ 
+                  py: 1.5,
+                  color: location.pathname === '/number-plate-detection' ? '#007FFF' : 'inherit',
+                  fontWeight: location.pathname === '/number-plate-detection' ? 'bold' : 'normal',
+                }}
+              >
+                License Plate Detection
+              </MenuItem>
+            </Menu>
+          </motion.div>
         </Box>
       </Toolbar>
     </AppBar>
